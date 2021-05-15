@@ -182,59 +182,59 @@ class Plague(commands.Cog):
 
     @commands.check(not_doctor)
     @commands.check(is_healthy)
-    @bank.cost(10000)
+    @bank.cost(30)
     @commands.command(aliases=["plaguedoc"])
     async def plaguedoctor(self, ctx):
-        """Become a doctor for 10,000 currency.
+        """Become a doctor for $30.
 
         You must be healthy to study at medical school."""
         currency = await bank.get_currency_name(ctx.guild)
         await self.config.user(ctx.author).gameRole.set(GameRole.DOCTOR)
         await self.notify_user(ctx, ctx.author, NotificationType.DOCTOR)
-        await ctx.send(f"{ctx.author} has spent 10,000 {currency} and become a Doctor.")
+        await ctx.send(f"{ctx.author} has spent 30 {currency} and become a Doctor.")
 
     @commands.check(not_plaguebearer)
     @commands.check(is_infected)
-    @bank.cost(10000)
+    @bank.cost(50)
     @commands.command()
     async def plaguebearer(self, ctx):
-        """Become a plaguebearer for 10,000 currency.
+        """Become a plaguebearer for $50.
 
         You must be infected to mutate into a plaguebearer."""
         currency = await bank.get_currency_name(ctx.guild)
         await self.config.user(ctx.author).gameRole.set(GameRole.PLAGUEBEARER)
         await self.notify_user(ctx, ctx.author, NotificationType.PLAGUEBEARER)
-        await ctx.send(f"{ctx.author} has spent 10,000 {currency} and become a Plaguebearer.")
+        await ctx.send(f"{ctx.author} has spent 50 {currency} and become a Plaguebearer.")
 
     @commands.check(has_role)
-    @bank.cost(10000)
+    @bank.cost(10)
     @commands.command()
     async def resign(self, ctx):
-        """Quit being a doctor or plaguebearer for 10,000 currency.
+        """Quit being a doctor or plaguebearer for $10.
 
         You must be infected to mutate into a plaguebearer."""
         currency = await bank.get_currency_name(ctx.guild)
         await self.config.user(ctx.author).gameRole.set(GameRole.USER)
         await ctx.send(
-            f"{ctx.author} has spent 10,000 {currency}- to resign from their current job."
+            f"{ctx.author} has spent 10 {currency}- to resign from their current job."
         )
 
     @commands.check(not_doctor)
     @commands.check(is_healthy)
-    @bank.cost(5000)
+    @bank.cost(10)
     @commands.command()
     async def infectme(self, ctx):
-        """Get infected for 5,000 currency.
+        """Get infected for $10.
 
         Why would you willingly infect yourself?"""
         await ctx.send(await self.infect_user(ctx, ctx.author))
 
     @commands.check(not_plaguebearer)
     @commands.check(is_infected)
-    @bank.cost(5000)
+    @bank.cost(20)
     @commands.command()
     async def treatme(self, ctx):
-        """Get cured from the plague for 5,000 currency.
+        """Get cured from the plague for $20.
 
         This is America, so the health care is expensive."""
         await ctx.send(await self.cure_user(ctx, ctx.author))
